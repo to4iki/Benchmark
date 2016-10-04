@@ -1,5 +1,6 @@
 # Benchmark
 
+[![Build Status][status-image]][status-url]
 [![License][license-image]][license-url]
 ![SwiftVersion][swift-version]
 
@@ -31,11 +32,10 @@ let package = Package(
 #### bm
 Invokes the function with a Benchmark.Report object, which may be used to collect and report on the results of individual benchmark tests.
 ```swift
-let ROOP_COUNT = 100000
-
+let n = 100000
 Benchmark.bm(labels: ["total: ", "ave: "]) { (r: Benchmark.Report) -> [TimeInterval] in
-    let one = r.output(label: "for: ") { for i in 1...ROOP_COUNT { let _ = String(i) } }
-    let two = r.output(label: "forEach: ") { (1...ROOP_COUNT).forEach({ let _ = String($0) }) }
+    let one = r.output(label: "for: ") { for i in 1...n { let _ = String(i) } }
+    let two = r.output(label: "forEach: ") { (1...n).forEach({ let _ = String($0) }) }
     let total = one.elapsed + two.elapsed
     let ave = total / 2
     return [total, ave]
@@ -62,6 +62,9 @@ print(times) // 3.0..
 ## Licence
 
 [MIT](http://to4iki.mit-license.org/)
+
+[status-url]: https://travis-ci.org/to4iki/Benchmark
+[status-image]: https://travis-ci.org/to4iki/Benchmark.svg
 
 [license-url]: http://to4iki.mit-license.org/
 [license-image]: http://img.shields.io/badge/license-MIT-brightgreen.svg
