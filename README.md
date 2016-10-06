@@ -29,13 +29,21 @@ let package = Package(
 ```
 
 ## Usage
+#### realTime
+Returns the elapsed real time used to execute the given function.
+
+```swift
+let time = Benchmark.realTime { sleep(3) }
+print(time) // 3.0..
+```
+
 #### bm
 Invokes the function with a Benchmark.Report object, which may be used to collect and report on the results of individual benchmark tests.
 ```swift
 let n = 100000
 Benchmark.bm(labels: ["total: ", "ave: "]) { (r: Benchmark.Report) -> [TimeInterval] in
-    let one = r.output(label: "for: ") { for i in 1...n { let _ = String(i) } }
-    let two = r.output(label: "forEach: ") { (1...n).forEach({ let _ = String($0) }) }
+    let one = r.time(label: "for: ") { for i in 1...n { String(i) } }
+    let two = r.time(label: "forEach: ") { (1...n).forEach({ String($0) }) }
     let total = one.elapsed + two.elapsed
     let ave = total / 2
     return [total, ave]
@@ -45,14 +53,6 @@ Benchmark.bm(labels: ["total: ", "ave: "]) { (r: Benchmark.Report) -> [TimeInter
 // forEach: 0.037
 // total: 0.064
 // ave: 0.032
-```
-
-#### mesure
-Returns the elapsed time used to execute the given function as a Benchmark.Times object. Takes label option
-
-```swift
-let times = Benchmark.measure { sleep(3) }
-print(times) // 3.0..
 ```
 
 ## Author

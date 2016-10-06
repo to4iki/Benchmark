@@ -4,11 +4,11 @@ public extension Benchmark {
     
     public struct Report {
         
-        public func output(label: String = "", f: () -> Void) -> Times {
+        public func time(label: String = "", f: () -> Void) -> Time {
             defer { print(times) }
             let startTime = Date()
             f()
-            let times = Times(label: label, realTime: Date().timeIntervalSince(startTime))
+            let times = Time(label: label, elapsed: Date().timeIntervalSince(startTime))
             return times
         }
     }
