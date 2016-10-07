@@ -8,8 +8,8 @@ public extension Benchmark {
         
         public let elapsed: TimeInterval
         
-        fileprivate var formatedElapsedTimeString: String {
-            return String(format: "%.3f", elapsed)
+        fileprivate var roundedElapsed: TimeInterval {
+            return round(elapsed * 1000) / 1000
         }
         
         init(label: String = "", elapsed: TimeInterval) {
@@ -24,6 +24,6 @@ public extension Benchmark {
 extension Benchmark.Time: CustomStringConvertible {
     
     public var description: String {
-        return "\(label)\(formatedElapsedTimeString)"
+        return "\(label)\(roundedElapsed)s"
     }
 }

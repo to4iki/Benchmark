@@ -48,6 +48,6 @@ extension Benchmark {
 extension Benchmark.Metrics: CustomStringConvertible {
     
     public var description: String {
-        return "\(formatedLabel)average: \(ave)\nSTDDEV: \(stddev)%"
+        return "\(formatedLabel)average: \(ave)s\nSTDDEV: \(stddev)%"
     }
 }
