@@ -11,6 +11,11 @@ public struct Benchmark {
         return Time(label: label, elapsed: elapsed)
     }
     
+    public static func measure(label: String = "", repeatCount: UInt = 10, f: () -> Void) -> Metrics {
+        let times = (0...repeatCount).map { _ in realTime(label: label, f: f) }
+        return Metrics(times: times)
+    }
+    
     public static func bm(f: (Report) -> Void) {
         let report = Report()
         f(report)
