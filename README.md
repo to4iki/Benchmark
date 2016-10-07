@@ -23,7 +23,7 @@ import PackageDescription
 let package = Package(
     name: "MyAwesomeApp",
     dependencies: [
-        .Package(url: "https://github.com/to4iki/Benchmark.git", majorVersion: 0, minor: 1),
+        .Package(url: "https://github.com/to4iki/Benchmark.git", majorVersion: 0, minor: 2),
     ]
 )
 ```
@@ -33,8 +33,20 @@ let package = Package(
 Returns the elapsed real time used to execute the given function.
 
 ```swift
-let time = Benchmark.realTime { sleep(3) }
-print(time) // 3.0..
+let time = Benchmark.realTime { awesome() }
+print(time) // 0.030s
+```
+
+#### measure
+Returns the simple metrics used to execute the given function as a Benchmark.Measure object.
+
+```swift
+let metrics = Benchmark.measure(label: "[awesome]") { awesome() }
+print(metrics)
+
+// [awesome]
+// average: 0.030s
+// STDDEV: 4%
 ```
 
 #### bm
@@ -42,17 +54,17 @@ Invokes the function with a Benchmark.Report object, which may be used to collec
 ```swift
 let n = 100000
 Benchmark.bm(labels: ["total: ", "ave: "]) { (r: Benchmark.Report) -> [TimeInterval] in
-    let one = r.time(label: "for: ") { for i in 1...n { String(i) } }
-    let two = r.time(label: "forEach: ") { (1...n).forEach({ String($0) }) }
+    let one = r.time(label: "for: ") { for i in 1...n { _ = String(i) } }
+    let two = r.time(label: "forEach: ") { (1...n).forEach({ _ = String($0) }) }
     let total = one.elapsed + two.elapsed
     let ave = total / 2
     return [total, ave]
 }
 
-// for: 0.027
-// forEach: 0.037
-// total: 0.064
-// ave: 0.032
+// for: 0.027s
+// forEach: 0.037s
+// total: 0.064s
+// ave: 0.032s
 ```
 
 ## Author
